@@ -39,6 +39,50 @@ import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
 import Code from '@ckeditor/ckeditor5-basic-styles/src/code';
 import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
 import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
+import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
+import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
+
+import imageIcon from './image-album.svg';
+
+class GalleryImage extends Plugin {
+	init() {
+		const editor = this.editor;
+		this._config = editor.config.get( 'gallery' ) || {};
+		editor.ui.componentFactory.add( 'galleryImage', locale => {
+			const view = new ButtonView( locale );
+
+			view.set( {
+				label: 'Изображение из галереи',
+				icon: imageIcon,
+				tooltip: true
+			} );
+			view.set( 'isVisible', this._config.show );
+			view.on( 'execute', () => {
+				this._openCallbacks.map( cb => cb( imageUrl => {
+					editor.model.change( writer => {
+						const selection = writer.createSelection( editor.model.document.selection );
+						const imageElement = writer.createElement( 'image', {
+							src: imageUrl
+						} );
+						editor.model.insertContent( imageElement, selection );
+					} );
+				} ) );
+			} );
+
+			return view;
+		} );
+	}
+
+	get _openCallbacks() {
+		const openCallbacks = [];
+
+		if ( this._config.open ) {
+			openCallbacks.push( this._config.open );
+		}
+
+		return openCallbacks;
+	}
+}
 
 export default class ClassicEditor extends ClassicEditorBase {
 }
@@ -77,7 +121,8 @@ ClassicEditor.builtinPlugins = [
 	Strikethrough,
 	Code,
 	Subscript,
-	Superscript
+	Superscript,
+	GalleryImage
 ];
 
 // Editor configuration.
@@ -107,6 +152,7 @@ ClassicEditor.defaultConfig = {
 			'bulletedList',
 			'numberedList',
 			'imageUpload',
+			'galleryImage',
 			'blockQuote',
 			'insertTable',
 			'mediaEmbed',
