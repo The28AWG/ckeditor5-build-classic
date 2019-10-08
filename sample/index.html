@@ -29,6 +29,7 @@
 		href="https://ckeditor.com/docs/ckeditor5/latest/builds/guides/development/custom-builds.html">custom build</a>
 		works fine.</p>
 </div>
+<div id="word-count"></div>
 <script src="../node_modules/@ckeditor/ckeditor5-inspector/build/inspector.js"></script>
 <script src="../build/ckeditor.js"></script>
 <script>
@@ -42,11 +43,18 @@
 		}
 	})
 		.then(editor => {
-			window.editor = editor;
-			CKEditorInspector.attach(editor);
+		    // console.info(editor.plugins);
+		    if (editor.plugins.has('WordCount')) {
+                const wordCountPlugin = editor.plugins.get('WordCount');
+                const wordCountWrapper = document.getElementById('word-count');
+
+                wordCountWrapper.appendChild(wordCountPlugin.wordCountContainer);
+            }
+			// window.editor = editor;
+			// CKEditorInspector.attach(editor);
 		})
 		.catch(err => {
-			console.error(err.stack);
+			console.info(err.data);
 		});
 </script>
 
