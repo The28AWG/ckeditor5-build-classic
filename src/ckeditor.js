@@ -59,7 +59,7 @@ import Code from '@ckeditor/ckeditor5-basic-styles/src/code';
 import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
 import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
 
-import WordCount from './wordcount';
+import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
 import GalleryImage from './gallery';
 
 import ClassicEditorBase from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
@@ -85,6 +85,7 @@ import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
 import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
+import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
 
 export default class ClassicEditor extends ClassicEditorBase {}
 
@@ -124,7 +125,8 @@ ClassicEditor.builtinPlugins = [
 	Subscript,
 	Superscript,
 	GalleryImage,
-	WordCount
+	WordCount,
+	TextTransformation
 ];
 
 // Editor configuration.
