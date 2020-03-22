@@ -41,7 +41,6 @@ import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
 import GalleryImage from './gallery';
 import Find from './find';
-import Replace from './replace';
 
 export default class ClassicEditor extends ClassicEditorBase {}
 
@@ -83,8 +82,7 @@ ClassicEditor.builtinPlugins = [
 	GalleryImage,
 	WordCount,
 	TextTransformation,
-	Find,
-	Replace
+	Find
 ];
 
 // Editor configuration.
@@ -121,8 +119,8 @@ ClassicEditor.defaultConfig = {
 			'|',
 			'undo',
 			'redo',
-			'find',
-			'replace'
+			'|',
+			'find'
 		]
 	},
 	blockToolbar: [
